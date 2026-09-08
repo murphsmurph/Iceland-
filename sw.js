@@ -1,6 +1,6 @@
 /* Iceland trip guide — offline cache
    Bump CACHE to a new version number any time you upload a new index.html. */
-var CACHE = 'iceland-v6';
+var CACHE = 'iceland-v7';
 var ASSETS = ['./', './index.html', './manifest.json'];
 
 self.addEventListener('install', function (e) {
