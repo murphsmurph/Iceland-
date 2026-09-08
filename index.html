@@ -1,0 +1,784 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover, maximum-scale=1">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Iceland">
+<link rel="manifest" href="manifest.json">
+<meta name="theme-color" content="#12181D">
+<title>Iceland — Jacob &amp; Krosley</title>
+<style>
+:root{
+  --basalt:#12181D;
+  --tephra:#1A242C;
+  --tephra2:#22303A;
+  --line:#2E3F4B;
+  --rime:#E4ECF0;
+  --steam:#93A7B2;
+  --geyser:#59B6C9;
+  --sulfur:#E0A93B;
+  --moss:#7FA65C;
+  --ember:#D97060;
+  --serif:"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0;padding:0}
+body{
+  background:var(--basalt);color:var(--rime);font-family:var(--sans);
+  font-size:16px;line-height:1.5;-webkit-font-smoothing:antialiased;
+  padding-bottom:calc(72px + env(safe-area-inset-bottom));
+}
+a{color:var(--geyser)}
+h1,h2,h3{margin:0;font-weight:600;letter-spacing:-0.01em}
+
+/* ---------- top bar ---------- */
+header{
+  position:sticky;top:0;z-index:40;
+  background:rgba(18,24,29,.92);backdrop-filter:blur(14px);
+  border-bottom:1px solid var(--line);
+  padding:calc(10px + env(safe-area-inset-top)) 18px 10px;
+}
+.brand{font-family:var(--serif);font-size:20px;line-height:1.1}
+.brandsub{font-size:12.5px;color:var(--steam);margin-top:3px}
+
+/* ---------- layout ---------- */
+main{padding:18px 16px 24px;max-width:640px;margin:0 auto}
+.panel{display:none}
+.panel.on{display:block}
+
+.sechead{
+  font-family:var(--serif);font-size:15px;color:var(--steam);
+  margin:26px 0 10px;padding-bottom:6px;border-bottom:1px solid var(--line);
+}
+.sechead:first-child{margin-top:0}
+
+.card{
+  background:var(--tephra);border:1px solid var(--line);
+  border-radius:14px;padding:14px 15px;margin-bottom:11px;
+}
+.card.flag{border-color:#6B4A2A;background:#241C15}
+.card.hero{border-color:var(--geyser);background:linear-gradient(160deg,#1B2E36,#182027)}
+
+.kv{display:flex;justify-content:space-between;gap:14px;padding:6px 0;font-size:14.5px;border-bottom:1px solid rgba(46,63,75,.5)}
+.kv:last-child{border-bottom:0}
+.kv span:first-child{color:var(--steam);flex-shrink:0}
+.kv span:last-child{text-align:right;font-variant-numeric:tabular-nums}
+
+.tag{display:inline-block;font-size:11.5px;padding:3px 9px;border-radius:20px;border:1px solid var(--line);color:var(--steam);margin:0 5px 5px 0}
+.tag.pay{border-color:#5C4622;color:var(--sulfur)}
+.tag.free{border-color:#3E5231;color:var(--moss)}
+.tag.you{border-color:#2B5560;color:var(--geyser)}
+
+p{margin:0 0 10px}
+p:last-child{margin-bottom:0}
+.note{font-size:14px;color:var(--steam)}
+ul{margin:8px 0 0;padding-left:19px}
+li{margin-bottom:5px;font-size:14.5px}
+
+/* ---------- day accordion ---------- */
+.day{background:var(--tephra);border:1px solid var(--line);border-radius:14px;margin-bottom:10px;overflow:hidden}
+.day.today{border-color:var(--geyser)}
+.daybtn{
+  width:100%;background:none;border:0;color:inherit;font:inherit;
+  display:flex;align-items:center;gap:13px;padding:14px 15px;text-align:left;cursor:pointer;
+}
+.daynum{font-family:var(--serif);font-size:27px;line-height:1;color:var(--geyser);width:34px;flex-shrink:0}
+.daymeta{flex:1;min-width:0}
+.daymeta b{display:block;font-size:15.5px;font-weight:600}
+.daymeta small{display:block;color:var(--steam);font-size:12.5px;margin-top:2px}
+.chev{color:var(--steam);font-size:13px;transition:transform .2s}
+.day.open .chev{transform:rotate(90deg)}
+.daybody{display:none;padding:0 15px 15px;border-top:1px solid var(--line)}
+.day.open .daybody{display:block}
+
+.evt{display:flex;gap:12px;padding:11px 0;border-bottom:1px solid rgba(46,63,75,.45)}
+.evt:last-child{border-bottom:0}
+.evt time{font-size:12.5px;color:var(--geyser);width:74px;flex-shrink:0;padding-top:2px;font-variant-numeric:tabular-nums}
+.evt div b{display:block;font-size:14.5px;font-weight:600;margin-bottom:2px}
+.evt div small{color:var(--steam);font-size:13px;display:block}
+.evt.key{background:rgba(89,182,201,.07);margin:0 -15px;padding:11px 15px}
+
+/* ---------- checklist ---------- */
+.chk{display:flex;align-items:flex-start;gap:12px;padding:10px 2px;cursor:pointer;border-bottom:1px solid rgba(46,63,75,.4)}
+.chk:last-child{border-bottom:0}
+.chk input{position:absolute;opacity:0;pointer-events:none}
+.box{width:22px;height:22px;border:1.5px solid var(--line);border-radius:6px;flex-shrink:0;margin-top:1px;display:flex;align-items:center;justify-content:center;font-size:13px;color:transparent;transition:.15s}
+.chk input:checked + .box{background:var(--moss);border-color:var(--moss);color:#12181D}
+.chk input:checked ~ .lbl{color:var(--steam);text-decoration:line-through}
+.chk input:focus-visible + .box{outline:2px solid var(--geyser);outline-offset:2px}
+.lbl{font-size:14.5px;line-height:1.4}
+.lbl em{display:block;font-style:normal;font-size:12.5px;color:var(--steam);margin-top:1px}
+.bar{height:5px;background:var(--tephra2);border-radius:5px;overflow:hidden;margin:10px 0 4px}
+.bar i{display:block;height:100%;background:var(--moss);width:0;transition:width .3s}
+
+/* ---------- converter ---------- */
+input[type=number]{
+  width:100%;background:var(--tephra2);border:1px solid var(--line);border-radius:10px;
+  color:var(--rime);font-size:19px;padding:11px 13px;font-family:var(--sans);
+  font-variant-numeric:tabular-nums;
+}
+input[type=number]:focus{outline:2px solid var(--geyser);outline-offset:1px}
+
+/* ---------- weather ---------- */
+.wx{display:flex;gap:9px;overflow-x:auto;padding:2px 0 6px;-webkit-overflow-scrolling:touch}
+.wxd{flex:0 0 84px;background:var(--tephra2);border:1px solid var(--line);border-radius:11px;padding:10px 8px;text-align:center}
+.wxd b{display:block;font-size:12px;color:var(--steam);font-weight:500}
+.wxd .t{font-family:var(--serif);font-size:20px;margin:5px 0 1px}
+.wxd .lo{font-size:12.5px;color:var(--steam)}
+.wxd .r{font-size:11.5px;color:var(--geyser);margin-top:4px}
+
+/* ---------- buttons / nav ---------- */
+.btn{display:inline-block;background:var(--tephra2);border:1px solid var(--line);color:var(--rime);
+  border-radius:10px;padding:9px 14px;font-size:14px;text-decoration:none;margin:4px 6px 0 0;cursor:pointer;font-family:var(--sans)}
+.btn.call{border-color:#2B5560;color:var(--geyser)}
+
+nav{
+  position:fixed;left:0;right:0;bottom:0;z-index:50;
+  background:rgba(18,24,29,.95);backdrop-filter:blur(16px);
+  border-top:1px solid var(--line);
+  display:flex;padding:6px 4px calc(6px + env(safe-area-inset-bottom));
+}
+nav button{
+  flex:1;background:none;border:0;color:var(--steam);font-family:var(--sans);
+  font-size:10.5px;padding:6px 2px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+}
+nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+nav button.on{color:var(--geyser)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="brand" id="hdrTitle">Iceland</div>
+  <div class="brandsub" id="hdrSub">Jacob &amp; Krosley · Sept 14–21, 2026</div>
+</header>
+
+<main>
+
+<!-- ================= TODAY ================= -->
+<section class="panel on" id="p-today">
+  <div id="todayHero"></div>
+  <div id="todayBody"></div>
+</section>
+
+<!-- ================= DAYS ================= -->
+<section class="panel" id="p-days">
+  <div class="sechead">Eight days, seven nights</div>
+  <div id="dayList"></div>
+</section>
+
+<!-- ================= TRAVEL ================= -->
+<section class="panel" id="p-travel">
+  <div class="sechead">Getting there — Monday, Sept 14</div>
+  <div id="flightsOut"></div>
+
+  <div class="sechead">Getting home — Monday, Sept 21</div>
+  <div id="flightsHome"></div>
+
+  <div class="card flag">
+    <b>Check this on Day One</b>
+    <p class="note" style="margin-top:6px">Hotel checkout is 11:00 AM and the ride to KEF takes about 45 minutes — but your flight leaves KEF at 12:00 PM. That doesn't add up. The travel directors will hand out a departure notice with the real transfer time. Ask at the Hospitality Desk as soon as you arrive.</p>
+  </div>
+
+  <div class="sechead">Baggage</div>
+  <div class="card">
+    <div class="kv"><span>Checked bags</span><span>1 each, 23kg / 50lb</span></div>
+    <div class="kv"><span>Carry-on</span><span>1 piece each</span></div>
+    <p class="note" style="margin-top:10px">eTicket numbers are deliberately not on this page — this site is public. Keep them in your Notes app.</p>
+    <p class="note" style="margin-top:10px">If you get charged for the first checked bag on an international leg, Edward Jones pays it back. Photograph the receipt and email it to edwardjones@travelhq.com. Second bags, overweight and oversized are on you.</p>
+  </div>
+
+  <div class="sechead">Where you're sleeping</div>
+  <div class="card">
+    <b>Hotel Geysir</b>
+    <div class="note" style="margin:4px 0 8px">Sept 15, 16, 17 · 806 Haukadalur, Iceland</div>
+    <div class="kv"><span>Check-in</span><span>3:00 PM</span></div>
+    <div class="kv"><span>Checkout</span><span>11:00 AM</span></div>
+    <div class="kv"><span>Card hold</span><span>None — pay incidentals at checkout</span></div>
+    <div class="kv"><span>Hospitality Desk</span><span>Lobby, 7 AM–7 PM</span></div>
+    <p class="note" style="margin-top:9px">Across the street from Strokkur, which erupts every 8–10 minutes. Breakfast, wi-fi, hiking trails and northern lights wake-up calls are included.</p>
+    <a class="btn call" href="tel:+3544806800">Call hotel</a>
+  </div>
+  <div class="card">
+    <b>The Reykjavik EDITION</b>
+    <div class="note" style="margin:4px 0 8px">Sept 18, 19, 20 · Austurbakki 2, 101 Reykjavik</div>
+    <div class="kv"><span>Check-in</span><span>3:00 PM</span></div>
+    <div class="kv"><span>Checkout</span><span>11:00 AM</span></div>
+    <div class="kv"><span>Card hold</span><span>~30,000 ISK (~$250) per night</span></div>
+    <div class="kv"><span>Hospitality Desk</span><span>Studio 1, 7 AM–7 PM</span></div>
+    <p class="note" style="margin-top:9px">Pay the final bill with the same card you checked in with, or the hold can sit on the first card for up to 15 days. Breakfast at Tides, wi-fi, 24-hour gym and northern lights wake-up calls included. Room service is not.</p>
+    <a class="btn call" href="tel:+3545820000">Call hotel</a>
+  </div>
+
+  <div class="sechead">Numbers to keep</div>
+  <div class="card">
+    <p class="note">Emergency in Iceland — police, fire, ambulance, search and rescue.</p>
+    <a class="btn call" href="tel:112">Call 112</a>
+    <div style="height:14px"></div>
+    <p class="note">Serious problem while traveling. Use the toll-free number in the US and Canada, the direct number from Iceland.</p>
+    <a class="btn call" href="tel:+18002533421">800-253-3421</a>
+    <a class="btn call" href="tel:+16368275270">636-827-5270</a>
+    <div style="height:14px"></div>
+    <p class="note">Edward Jones Travel Headquarters, 8:00 AM–4:30 PM Central. Email isn't monitored nights or weekends — call instead.</p>
+    <a class="btn" href="mailto:edwardjones@travelhq.com">Email Travel HQ</a>
+  </div>
+
+  <div class="sechead">Time difference</div>
+  <div class="card">
+    <div class="kv"><span>Iceland</span><span id="clockIS">—</span></div>
+    <div class="kv"><span>Home (Central)</span><span id="clockUS">—</span></div>
+    <p class="note" style="margin-top:9px">Iceland runs 5 hours ahead of Alabama and never changes its clocks. Sunrise around 6:45 AM, sunset around 7:45 PM that week, so you get real daylight for the tours.</p>
+  </div>
+</section>
+
+<!-- ================= DO ================= -->
+<section class="panel" id="p-do">
+  <div class="sechead">Your three optional tours</div>
+  <div class="card">
+    <p class="note">You're in <b style="color:var(--rime)">Group Two</b> on every list, which is why your dates land where they do. Total for the three, both of you: <b style="color:var(--sulfur)">202,600 ISK ≈ $1,647</b>. These are personal expenses, paid at booking.</p>
+  </div>
+  <div id="doList"></div>
+
+  <div class="sechead">Included in the trip</div>
+  <div id="incList"></div>
+</section>
+
+<!-- ================= PACK ================= -->
+<section class="panel" id="p-pack">
+  <div class="sechead">Forecast</div>
+  <div class="card">
+    <div id="wxStatus" class="note">Loading forecast…</div>
+    <div id="wxWrap"></div>
+    <p class="note" style="margin-top:10px">Typical for that week: highs near 52°F / 11°C, lows near 43°F / 6°C. Wind and sideways rain are the real story, not the temperature. Layers and a genuinely waterproof shell.</p>
+  </div>
+
+  <div class="sechead">Packing</div>
+  <div class="card">
+    <div class="bar"><i id="packBar"></i></div>
+    <div class="note" id="packCount">0 of 0 packed</div>
+    <button class="btn" id="resetPack" style="margin-top:10px">Clear all checkmarks</button>
+  </div>
+  <div id="packList"></div>
+
+  <div class="sechead">Dress codes by day</div>
+  <div id="dressList"></div>
+</section>
+
+<!-- ================= MONEY ================= -->
+<section class="panel" id="p-money">
+  <div class="sechead">Króna converter</div>
+  <div class="card">
+    <div class="note" style="margin-bottom:6px">Icelandic króna</div>
+    <input type="number" id="isk" inputmode="decimal" placeholder="0" value="10000">
+    <div class="note" style="margin:12px 0 6px">US dollars</div>
+    <input type="number" id="usd" inputmode="decimal" placeholder="0">
+    <p class="note" style="margin-top:11px">Using the rate in your trip booklet: $1 = 123 ISK. Check xe.com for the live rate when you land.</p>
+  </div>
+
+  <div class="sechead">What the three tours cost</div>
+  <div class="card">
+    <div class="kv"><span>Buggy Adventure</span><span>35,200 ISK · $286</span></div>
+    <div class="kv"><span>Þórsmörk day tour</span><span>43,500 ISK · $354</span></div>
+    <div class="kv"><span>South Coast Highlights</span><span>22,600 ISK · $184</span></div>
+    <div class="kv"><span><b>Each of you</b></span><span><b>101,300 ISK · $824</b></span></div>
+    <div class="kv"><span><b>Both of you</b></span><span><b>202,600 ISK · $1,647</b></span></div>
+  </div>
+
+  <div class="sechead">Covered vs. on you</div>
+  <div class="card">
+    <b style="color:var(--moss)">Edward Jones pays</b>
+    <ul>
+      <li>Airfare, hotels, all designated transfers, luggage handling</li>
+      <li>Blue Lagoon spa and breakfast, Day 2</li>
+      <li>Welcome dinner at Hotel Geysir</li>
+      <li>Breakfast every morning at your hotel restaurant</li>
+      <li>Lunch after Wednesday's business meeting</li>
+      <li>Gullfoss &amp; Glacier group tour</li>
+      <li>Friðheimar Farm theme dinner</li>
+      <li>Motorcoach from Geysir to Reykjavik, with Þingvellir, Kerið and lunch</li>
+      <li>A cash supplement toward your two dine-around dinners</li>
+      <li>Farewell reception and dinner</li>
+      <li>Gratuities on everything group-related</li>
+    </ul>
+  </div>
+  <div class="card">
+    <b style="color:var(--sulfur)">You pay</b>
+    <ul>
+      <li>Your three optional tours</li>
+      <li>Lunches on leisure days</li>
+      <li>Anything past the cash supplement at dinner</li>
+      <li>Room service, minibar, spa treatments</li>
+      <li>A second checked bag, or an overweight one</li>
+      <li>Souvenirs and shopping</li>
+    </ul>
+  </div>
+
+  <div class="sechead">Paying for things</div>
+  <div class="card">
+    <ul>
+      <li>Both hotels take Visa, Mastercard and Amex. Outside the hotels, Amex and Discover are unreliable — lead with Visa or Mastercard.</li>
+      <li>Tell your card company you're going to Iceland before you leave, or expect declines.</li>
+      <li>Neither hotel has an ATM. There's one at the gift shop next door to Hotel Geysir.</li>
+      <li>An ATM withdrawal usually beats a currency exchange counter. Check your PIN works abroad and what your daily limit is.</li>
+      <li>Card is better than cash here. Iceland runs on cards for almost everything.</li>
+      <li>Call your guest room phone last — hotels charge a service fee per call on top of the rate. Use wi-fi and FaceTime or WhatsApp.</li>
+    </ul>
+  </div>
+
+  <div class="sechead">Where to eat in Reykjavik</div>
+  <div class="card">
+    <p class="note">Two dinners are yours to choose: Friday the 18th and Saturday the 19th. The travel directors will book a table for you if you ask.</p>
+    <div class="note" style="margin-top:10px;color:var(--rime)"><b>In the hotel</b></div>
+    <ul>
+      <li>Tides — modern Nordic, waterfront views ($$$$)</li>
+      <li>The Roof — rooftop, mountain and ocean views, cocktails ($$$$)</li>
+      <li>The Lobby Bar — open fireplace, cocktails, light bites ($$$)</li>
+      <li>Tides Bakery &amp; Café — street level, pastries and coffee ($$)</li>
+    </ul>
+    <div class="note" style="margin-top:12px;color:var(--rime)"><b>Out in the city</b></div>
+    <ul>
+      <li>Kopar — Icelandic seafood on the old harbour ($$$$)</li>
+      <li>Grill Market — fire-grilled Icelandic meat and fish ($$$$)</li>
+      <li>Fish Market — Icelandic ingredients, Asian technique ($$$$)</li>
+      <li>Fish Company — Nordic fusion, tucked under a bridge ($$$$)</li>
+      <li>Seafood Grill (Sjávargrillið) — rustic, island flavors ($$$$)</li>
+      <li>Apótek Kitchen + Bar — upscale, downtown ($$$$)</li>
+      <li>Monkeys Food &amp; Wine — charcoal oven, 1920s bar ($$$$)</li>
+      <li>OTO — Japanese and Italian, natural wine ($$$$)</li>
+      <li>Sumac — Middle Eastern, shareable, lively ($$$)</li>
+      <li>Caruso — Italian in a historic house, candlelit ($$$)</li>
+    </ul>
+  </div>
+</section>
+
+</main>
+
+<nav>
+  <button data-p="today" class="on"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>Today</button>
+  <button data-p="days"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Days</button>
+  <button data-p="travel"><svg viewBox="0 0 24 24"><path d="M3 13l8-2 4-8 2 1-2 8 5-1 1 2-5 2-3 7-2-1 1-6-8 2z"/></svg>Travel</button>
+  <button data-p="do"><svg viewBox="0 0 24 24"><path d="M3 19l6-9 4 5 3-4 5 8z"/><circle cx="8" cy="6" r="2"/></svg>Do</button>
+  <button data-p="pack"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>Pack</button>
+  <button data-p="money"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Money</button>
+</nav>
+
+<script>
+/* ---------------- storage that never breaks ---------------- */
+var mem={};
+var store={
+  get:function(k){try{return localStorage.getItem(k)}catch(e){return (k in mem)?mem[k]:null}},
+  set:function(k,v){try{localStorage.setItem(k,v)}catch(e){mem[k]=v}},
+  del:function(k){try{localStorage.removeItem(k)}catch(e){delete mem[k]}}
+};
+
+/* ---------------- trip data ---------------- */
+var DAYS=[
+{n:1,date:"2026-09-14",dow:"Monday",title:"Fly out",loc:"Huntsville → Dulles → Keflavík",dress:"Travel attire",
+ events:[
+  {t:"10:00 AM",k:1,b:"Be at Huntsville airport",s:"Three hours before boarding. Passports, itinerary, boarding passes ready."},
+  {t:"1:05 PM",k:1,b:"UA 4411 to Washington Dulles",s:"Seats 17C and 17D. Arrives 4:06 PM. Bags checked through to KEF."},
+  {t:"4:06 PM",b:"Layover at Dulles",s:"6 hours 29 minutes. Long enough to eat a real meal and stretch."},
+  {t:"10:35 PM",k:1,b:"UA 0398 to Keflavík",s:"Seats 34D and 34E. Boeing 757. Meals served. 5 hours 55 minutes."},
+  {t:"Overnight",b:"Sleep if you can",s:"Water, not alcohol. Get up and walk once. This is the whole jet lag strategy."}
+ ],
+ flags:["Swimsuit, cover-up and sandals go in your carry-on — you go straight to the Blue Lagoon tomorrow.","72 hours of clothes, all medication and both passports in carry-on. Leave jewelry home."]},
+
+{n:2,date:"2026-09-15",dow:"Tuesday",title:"Land, soak, drive east",loc:"Blue Lagoon → Hotel Geysir",dress:"Swimwear, then casual evening",
+ events:[
+  {t:"8:30 AM",k:1,b:"Land at Keflavík",s:"Immigration, then baggage claim, then Customs."},
+  {t:"~9:15 AM",k:1,b:"Meet the travel staff",s:"Look for 'Experience the World' signs just outside baggage claim."},
+  {t:"~9:45 AM",b:"Blue Lagoon, 25 minutes away",s:"Breakfast, then the lagoon at your own pace. Robe and towel provided."},
+  {t:"Midday",b:"Two-hour drive to Geysir",s:"Sleep on the bus. You've earned it."},
+  {t:"3:00 PM",k:1,b:"Check in at Hotel Geysir",s:"Card on file for incidentals. No hold placed here. Bags go up to the room."},
+  {t:"After",k:1,b:"Hospitality Desk in the lobby",s:"Pick up name badges — gray for Jacob, blue for Krosley. Confirm your three tours."},
+  {t:"Afternoon",b:"Rest",s:"Unpack. Strokkur is across the street and erupts every 8–10 minutes."},
+  {t:"6:00–9:00 PM",k:1,b:"Welcome dinner",s:"Geysir Restaurant. Casual evening attire."}
+ ],
+ flags:["Ask the travel directors today what time Monday's airport transfer actually leaves."]},
+
+{n:3,date:"2026-09-16",dow:"Wednesday",title:"Meetings, then Gullfoss",loc:"Hotel Geysir",dress:"Casual for the meeting, sportswear after",
+ events:[
+  {t:"7:00–8:30",k:1,b:"Group breakfast",s:"Geysir Restaurant."},
+  {t:"8:30–9:30",k:1,b:"Financial advisor meeting — required",s:"Geysir Restaurant, 2nd floor. Jacob only."},
+  {t:"9:30–9:45",b:"Break"},
+  {t:"9:45–11:00",k:1,b:"Combined meeting",s:"2nd floor. Both of you. A local rep stays after to talk tours."},
+  {t:"11:00–12:15",b:"Group lunch",s:"Geysir Restaurant. Included."},
+  {t:"12:30–5:45",k:1,b:"Gullfoss & Glacier Adventure",s:"Included group tour. Change into sportswear and waterproofs first — Gullfoss soaks you."},
+  {t:"Evening",b:"Dinner",s:"Likely the Friðheimar Farm theme dinner. Confirm on the on-site agenda."}
+ ],
+ flags:[]},
+
+{n:4,date:"2026-09-17",dow:"Thursday",title:"Buggy day",loc:"Geysir highlands",dress:"Sportswear",
+ events:[
+  {t:"7:00–8:30",b:"Breakfast",s:"Geysir Restaurant."},
+  {t:"9:15–12:00",k:1,b:"Buggy Adventure — morning session",s:"One of two options. Confirm which one you're booked on at the Hospitality Desk."},
+  {t:"1:45–5:00",k:1,b:"Buggy Adventure — afternoon session",s:"The other option. Same tour, same price."},
+  {t:"Rest of day",b:"Leisure",s:"Hiking trails from the hotel. Hot spring across the street."},
+  {t:"Evening",b:"Dinner at Hotel Geysir",s:"Check the agenda — one Geysir dinner is included on the trip."}
+ ],
+ flags:["You have both buggy sessions listed because you haven't confirmed which one. Sort it at the desk on Day Two."]},
+
+{n:5,date:"2026-09-18",dow:"Friday",title:"Golden Circle to the city",loc:"Geysir → Reykjavik",dress:"Sportswear, then your call for dinner",
+ events:[
+  {t:"Before 9",k:1,b:"Bags out, breakfast, check out",s:"Everything packed before the coach leaves."},
+  {t:"9:00 AM",k:1,b:"Motorcoach to Reykjavik",s:"Included. Stops at Þingvellir National Park and Kerið Crater."},
+  {t:"Midday",b:"Lunch at Ingólfsskáli Viking Restaurant",s:"Included."},
+  {t:"~2:30 PM",b:"Arrive at The Reykjavik EDITION"},
+  {t:"3:00 PM",k:1,b:"Check in",s:"They will hold about $250 per night on your card. Use the same card at checkout."},
+  {t:"After",b:"Hospitality Desk moves to Studio 1",s:"Same hours, new room."},
+  {t:"Evening",k:1,b:"Dinner on your own — night one of two",s:"Cash supplement covers part of it. Ask the desk to book a table."}
+ ],
+ flags:[]},
+
+{n:6,date:"2026-09-19",dow:"Saturday",title:"Þórsmörk",loc:"Thor's Valley",dress:"Hiking layers",
+ events:[
+  {t:"~7:00 AM",k:1,b:"Breakfast at Tides — early",s:"Breakfast runs to 10:30 but you leave at 7:45. Eat by 7:30 or take something."},
+  {t:"7:45 AM",k:1,b:"Thor's Valley — Þórsmörk day tour",s:"Modified mountain bus. Seljalandsfoss, Gígjökull glacier, Stakkholtsgjá canyon. Icelandic BBQ lunch included."},
+  {t:"6:30 PM",b:"Back at the hotel",s:"Nearly eleven hours out. Plan a short evening."},
+  {t:"Evening",k:1,b:"Dinner on your own — night two of two",s:"Somewhere close and easy. You'll be tired."},
+  {t:"Today",b:"Departure notice arrives",s:"The travel directors hand out Monday's airport timing. Read it."}
+ ],
+ flags:["Uneven paths and forest hiking. Not accessible. Hiking shoes, not sneakers."]},
+
+{n:7,date:"2026-09-20",dow:"Sunday",title:"Black sand, then the farewell",loc:"South Coast → Reykjavik",dress:"Sportswear, then casual elegance",
+ events:[
+  {t:"~7:15 AM",k:1,b:"Breakfast at Tides — early again",s:"You leave at 8:00."},
+  {t:"8:00 AM",k:1,b:"South Coast Highlights",s:"Seljalandsfoss, Skógafoss, and Reynisfjara black sand beach near Vík. Lunch and guide included."},
+  {t:"6:00 PM",k:1,b:"Back at the hotel — one hour to turn around",s:"Shower and change into casual elegance. No jeans tonight."},
+  {t:"7:00–7:30",k:1,b:"Farewell reception",s:"Ballroom Foyer."},
+  {t:"7:30–9:30",k:1,b:"Farewell dinner",s:"Ballroom."},
+  {t:"Before bed",k:1,b:"Settle the incidental account",s:"Front desk. Same card you checked in with. Pack tonight."}
+ ],
+ flags:["Never turn your back on the waves at Reynisfjara. The sneaker waves there have killed people. Stay well up the beach.","Tight day. Lay out tonight's clothes before you leave in the morning."]},
+
+{n:8,date:"2026-09-21",dow:"Monday",title:"Fly home",loc:"Reykjavik → Chicago → Huntsville",dress:"Travel attire",
+ events:[
+  {t:"7:00–10:30",b:"Breakfast at Tides"},
+  {t:"Per notice",k:1,b:"Transfer to Keflavík",s:"About 45 minutes. Go by the departure notice, not the 11:00 AM checkout time."},
+  {t:"11:00 AM",b:"Checkout deadline",s:"Settle anything outstanding."},
+  {t:"12:00 PM",k:1,b:"UA 0913 to Chicago O'Hare",s:"Seats 32C and 32B. Arrives 1:55 PM, Terminal 5."},
+  {t:"1:55 PM",b:"Layover at O'Hare",s:"3 hours 50 minutes. Terminal 5 to Terminal 2 — allow real time for the transfer."},
+  {t:"5:45 PM",k:1,b:"UA 4611 to Huntsville",s:"Seats 16B and 16A. Terminal 2. Arrives 7:40 PM."},
+  {t:"7:40 PM",b:"Home"}
+ ],
+ flags:["Liquids, gels and aerosols in one quart bag through KEF security, even with PreCheck."]}
+];
+
+var FLIGHTS_OUT=[
+ {code:"UA 4411",from:"HSV",fromc:"Huntsville",to:"IAD",toc:"Washington Dulles",dep:"1:05 PM",arr:"4:06 PM",dur:"2h 01m",seats:"17C · 17D",ac:"Operated by GoJet as United Express",date:"Mon, Sept 14"},
+ {code:"UA 0398",from:"IAD",fromc:"Washington Dulles",to:"KEF",toc:"Keflavík",dep:"10:35 PM",arr:"8:30 AM +1",dur:"5h 55m",seats:"34D · 34E",ac:"Boeing 757-200 · meals served",date:"Mon, Sept 14 → Tue, Sept 15"}
+];
+var FLIGHTS_HOME=[
+ {code:"UA 0913",from:"KEF",fromc:"Keflavík",to:"ORD",toc:"Chicago O'Hare",dep:"12:00 PM",arr:"1:55 PM",dur:"6h 55m",seats:"32C · 32B",ac:"Boeing 757-200 · arrives Terminal 5",date:"Mon, Sept 21"},
+ {code:"UA 4611",from:"ORD",fromc:"Chicago O'Hare",to:"HSV",toc:"Huntsville",dep:"5:45 PM",arr:"7:40 PM",dur:"1h 55m",seats:"16B · 16A",ac:"Departs Terminal 2",date:"Mon, Sept 21"}
+];
+
+var TOURS=[
+ {name:"Buggy Adventure Tour",when:"Thursday, Sept 17",time:"9:15 AM–12:00 PM or 1:45–5:00 PM",price:"35,200 ISK · $286 each",
+  desc:"Off-road buggies between the Geysir geothermal field and Gullfoss, up onto the Haukadalsheiði plateau along the old Kjölur road. Views of Langjökull glacier and Sandvatn lagoon.",
+  inc:"Helmets, gloves, balaclavas, waterproof overalls and transport both ways.",
+  wear:"Warm layers under the overalls. Sunglasses. Phone in a waterproof case.",
+  warn:"Not recommended if you have back problems. Session not yet confirmed — check at the Hospitality Desk."},
+ {name:"Thor's Valley — Þórsmörk",when:"Saturday, Sept 19",time:"7:45 AM–6:30 PM",price:"43,500 ISK · $354 each",
+  desc:"A full day into a glacier-carved valley between volcanoes, by modified mountain bus. Light hikes at Seljalandsfoss, Gígjökull glacier and Stakkholtsgjá canyon, through birch forest and river crossings.",
+  inc:"Transport, Icelandic BBQ lunch in the reserve, guided walks at each stop.",
+  wear:"Hiking shoes, moisture-wicking base layer, fleece, waterproof shell, gloves, hat.",
+  warn:"Not ADA accessible. Uneven paths and forest hiking. Longest day of the trip."},
+ {name:"South Coast Highlights",when:"Sunday, Sept 20",time:"8:00 AM–6:00 PM",price:"22,600 ISK · $184 each",
+  desc:"Motorcoach down the south coast to Seljalandsfoss, Skógafoss, and Reynisfjara — the black sand beach near Vík with basalt columns and heavy Atlantic surf. Photo stops throughout.",
+  inc:"Transport, lunch and a guide.",
+  wear:"Waterproof shell and warm layers. Waterfall spray will find you. Shoes that handle wet sand.",
+  warn:"Sneaker waves at Reynisfjara are genuinely dangerous. Stay far back and never turn your back on the water. You're back at 6:00 PM with the farewell reception at 7:00."}
+];
+
+var INCLUDED=[
+ {name:"Blue Lagoon",when:"Tuesday, Sept 15 — morning on arrival",note:"Breakfast and the lagoon at leisure, straight from the airport. Robe and towel provided. Swimsuit must be in your carry-on."},
+ {name:"Gullfoss & Glacier Adventure",when:"Wednesday, Sept 16 — 12:30–5:45 PM",note:"Group tour after the morning meetings. Waterproofs — Gullfoss throws spray a long way."},
+ {name:"Journey from Geysir to Reykjavik",when:"Friday, Sept 18 — 9:00 AM–2:30 PM",note:"Þingvellir National Park, Kerið Crater, and lunch at Ingólfsskáli Viking Restaurant on the way into the city."}
+];
+
+var PACK=[
+ {cat:"Carry-on — do not check these",items:[
+  ["Both passports","Valid 6+ months past Sept 21, two blank pages, name matches the ticket"],
+  ["Flight itinerary and boarding passes",""],
+  ["Swimsuits","Blue Lagoon happens before you see a hotel room"],
+  ["Cover-ups and flip-flops or sandals",""],
+  ["All medication",""],
+  ["72 hours of clothes each","In case a bag goes missing"],
+  ["Credit cards","Visa or Mastercard first; call the card company before you go"],
+  ["Phones, chargers, power bank",""],
+  ["Type F plug adapter","Iceland is 230V, two round pins"],
+  ["Liquids in one quart bag",""],
+  ["Empty water bottle","Icelandic tap water is excellent and free"]
+ ]},
+ {cat:"Outerwear",items:[
+  ["Insulated hooded coat",""],
+  ["Waterproof, windproof hooded shell","The single most important item you will pack"],
+  ["Fleece or heavy sweater",""],
+  ["Gloves",""],
+  ["Warm hat",""],
+  ["Scarf or buff",""],
+  ["Rain poncho or compact umbrella","Wind often beats umbrellas here"]
+ ]},
+ {cat:"Tour days — Thu, Sat, Sun",items:[
+  ["Hiking shoes with real grip","Þórsmörk and the black beach both demand these"],
+  ["Moisture-wicking base layers",""],
+  ["Hiking or athletic pants","Not jeans — jeans stay wet"],
+  ["Wool socks, several pairs",""],
+  ["Sunglasses",""],
+  ["Sunscreen",""],
+  ["Waterproof phone case or dry bag",""],
+  ["Small daypack",""]
+ ]},
+ {cat:"Evenings and the meeting",items:[
+  ["Wednesday meeting: collared shirt and slacks","Jeans are fine, this one's casual"],
+  ["Casual evening outfits, three or four nights",""],
+  ["Sunday farewell: dressier outfit","Casual elegance — dress or blouse and skirt, button-down and dress pants. No jeans."],
+  ["Sport coat","Optional, no tie needed"],
+  ["Dress shoes",""],
+  ["Swimsuit again for the hotel spa",""]
+ ]},
+ {cat:"Practical",items:[
+  ["Split each person's clothes across both suitcases","So a lost bag doesn't strand one of you"],
+  ["Weigh both bags before leaving home","23kg / 50lb limit"],
+  ["Photos of passports saved to your phone",""],
+  ["Download offline maps of Iceland",""],
+  ["Check international roaming with your carrier",""],
+  ["Reusable tote for shopping",""],
+  ["Lip balm and hand lotion","Wind and geothermal water are drying"],
+  ["Eye mask and earplugs for the overnight flight",""]
+ ]}
+];
+
+var DRESS=[
+ {d:"Mon 14 & Mon 21",w:"Travel attire",n:"Comfortable, loose, layered. Slacks or jeans, sweater, easy shoes."},
+ {d:"Tue 15",w:"Swimwear, then casual evening",n:"Swimsuit in the carry-on. Casual evening for the welcome dinner."},
+ {d:"Wed 16",w:"Casual for the meeting, sportswear after",n:"Collared shirt and slacks in the morning. Jeans allowed. Change before the Gullfoss tour."},
+ {d:"Thu 17 & Sat 19 & Sun 20 daytime",w:"Sportswear",n:"Layers, waterproof shell, hiking shoes."},
+ {d:"Fri 18 & Sat 19 evenings",w:"Casual evening",n:"Some restaurants want long pants, collared shirts and closed-toe shoes. Check the website first."},
+ {d:"Sun 20 evening",w:"Casual elegance",n:"Dressier. Dresses, blouse and skirt, button-down and dress pants. Sport coat optional. Jeans are not appropriate."}
+];
+
+/* ---------------- render ---------------- */
+function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
+function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+
+/* days */
+var todayKey=null;
+(function(){
+  var wrap=document.getElementById('dayList');
+  DAYS.forEach(function(d){
+    var ev=d.events.map(function(e){
+      return '<div class="evt'+(e.k?' key':'')+'"><time>'+esc(e.t)+'</time><div><b>'+esc(e.b)+'</b>'+(e.s?'<small>'+esc(e.s)+'</small>':'')+'</div></div>';
+    }).join('');
+    var fl=(d.flags||[]).map(function(f){return '<div class="card flag" style="margin-top:11px">'+esc(f)+'</div>'}).join('');
+    var node=el('<div class="day" data-date="'+d.date+'">'+
+      '<button class="daybtn"><span class="daynum">'+d.n+'</span>'+
+      '<span class="daymeta"><b>'+esc(d.title)+'</b><small>'+d.dow+', Sept '+(+d.date.slice(8))+' · '+esc(d.loc)+'</small></span>'+
+      '<span class="chev">&#9656;</span></button>'+
+      '<div class="daybody"><div class="note" style="padding:10px 0 2px">Dress: '+esc(d.dress)+'</div>'+ev+fl+'</div></div>');
+    node.querySelector('.daybtn').addEventListener('click',function(){node.classList.toggle('open')});
+    wrap.appendChild(node);
+  });
+})();
+
+/* flights */
+function flightCard(f){
+  return '<div class="card"><div style="display:flex;justify-content:space-between;align-items:baseline">'+
+   '<b style="font-size:16px">'+f.code+'</b><span class="note" style="font-size:12.5px">'+f.date+'</span></div>'+
+   '<div style="display:flex;align-items:center;gap:12px;margin:12px 0 10px">'+
+     '<div><div style="font-family:var(--serif);font-size:24px">'+f.from+'</div><div class="note" style="font-size:12px">'+f.dep+'</div></div>'+
+     '<div style="flex:1;text-align:center;color:var(--steam);font-size:11.5px">'+f.dur+'<div style="border-top:1px solid var(--line);margin-top:4px"></div></div>'+
+     '<div style="text-align:right"><div style="font-family:var(--serif);font-size:24px">'+f.to+'</div><div class="note" style="font-size:12px">'+f.arr+'</div></div>'+
+   '</div>'+
+   '<div class="kv"><span>Route</span><span>'+f.fromc+' → '+f.toc+'</span></div>'+
+   '<div class="kv"><span>Seats</span><span>'+f.seats+'</span></div>'+
+   '<div class="kv"><span>Aircraft</span><span>'+f.ac+'</span></div></div>';
+}
+document.getElementById('flightsOut').innerHTML=FLIGHTS_OUT.map(flightCard).join('')+
+  '<div class="card"><div class="kv"><span>Dulles layover</span><span>6h 29m</span></div></div>';
+document.getElementById('flightsHome').innerHTML=FLIGHTS_HOME.map(flightCard).join('')+
+  '<div class="card"><div class="kv"><span>O\'Hare layover</span><span>3h 50m · T5 to T2</span></div></div>';
+
+/* tours */
+document.getElementById('doList').innerHTML=TOURS.map(function(t){
+  return '<div class="card"><b style="font-size:16px">'+esc(t.name)+'</b>'+
+  '<div style="margin:8px 0 4px"><span class="tag you">'+esc(t.when)+'</span><span class="tag">'+esc(t.time)+'</span><span class="tag pay">'+esc(t.price)+'</span></div>'+
+  '<p class="note" style="margin-top:8px">'+esc(t.desc)+'</p>'+
+  '<div class="kv"><span>Included</span><span>'+esc(t.inc)+'</span></div>'+
+  '<div class="kv"><span>Wear</span><span>'+esc(t.wear)+'</span></div>'+
+  '<p class="note" style="margin-top:10px;color:var(--sulfur)">'+esc(t.warn)+'</p></div>';
+}).join('');
+
+document.getElementById('incList').innerHTML=INCLUDED.map(function(t){
+  return '<div class="card"><b>'+esc(t.name)+'</b><div style="margin:7px 0 2px"><span class="tag free">Paid for</span><span class="tag">'+esc(t.when)+'</span></div>'+
+  '<p class="note" style="margin-top:7px">'+esc(t.note)+'</p></div>';
+}).join('');
+
+/* dress */
+document.getElementById('dressList').innerHTML=DRESS.map(function(d){
+  return '<div class="card"><b>'+esc(d.w)+'</b><div class="note" style="margin:3px 0 7px">'+esc(d.d)+'</div><p class="note">'+esc(d.n)+'</p></div>';
+}).join('');
+
+/* packing */
+(function(){
+  var wrap=document.getElementById('packList'),i=0,total=0;
+  PACK.forEach(function(g){
+    var h='<div class="card"><b>'+esc(g.cat)+'</b><div style="margin-top:8px">';
+    g.items.forEach(function(it){
+      var id='pk'+(i++);total++;
+      h+='<label class="chk"><input type="checkbox" data-k="'+id+'"><span class="box">&#10003;</span>'+
+         '<span class="lbl">'+esc(it[0])+(it[1]?'<em>'+esc(it[1])+'</em>':'')+'</span></label>';
+    });
+    wrap.appendChild(el(h+'</div></div>'));
+  });
+  var boxes=wrap.querySelectorAll('input');
+  function paint(){
+    var n=0;boxes.forEach(function(b){if(b.checked)n++});
+    document.getElementById('packBar').style.width=(total?n/total*100:0)+'%';
+    document.getElementById('packCount').textContent=n+' of '+total+' packed';
+  }
+  boxes.forEach(function(b){
+    if(store.get(b.dataset.k)==='1')b.checked=true;
+    b.addEventListener('change',function(){
+      b.checked?store.set(b.dataset.k,'1'):store.del(b.dataset.k);paint();
+    });
+  });
+  document.getElementById('resetPack').addEventListener('click',function(){
+    boxes.forEach(function(b){b.checked=false;store.del(b.dataset.k)});paint();
+  });
+  paint();
+})();
+
+/* converter */
+(function(){
+  var R=123,a=document.getElementById('isk'),b=document.getElementById('usd'),lock=false;
+  function f(n){return n.toLocaleString(undefined,{maximumFractionDigits:2})}
+  a.addEventListener('input',function(){if(lock)return;lock=true;b.value=a.value?f(a.value/R):'';lock=false});
+  b.addEventListener('input',function(){if(lock)return;lock=true;a.value=b.value?f(b.value*R):'';lock=false});
+  b.value=f(10000/R);
+})();
+
+/* clocks */
+function clocks(){
+  var o={hour:'numeric',minute:'2-digit'};
+  try{
+    document.getElementById('clockIS').textContent=new Date().toLocaleTimeString('en-US',Object.assign({timeZone:'Atlantic/Reykjavik'},o));
+    document.getElementById('clockUS').textContent=new Date().toLocaleTimeString('en-US',Object.assign({timeZone:'America/Chicago'},o));
+  }catch(e){}
+}
+clocks();setInterval(clocks,20000);
+
+/* ---------------- TODAY ---------------- */
+function ymd(d){return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0')}
+function buildToday(){
+  var now=new Date(),key=ymd(now);
+  var day=DAYS.filter(function(d){return d.date===key})[0];
+  var hero=document.getElementById('todayHero'),body=document.getElementById('todayBody');
+  var start=new Date('2026-09-14T00:00:00'), end=new Date('2026-09-21T23:59:59');
+
+  if(day){
+    document.querySelectorAll('.day').forEach(function(n){
+      if(n.dataset.date===key){n.classList.add('today','open')}
+    });
+    hero.innerHTML='<div class="card hero"><div class="note" style="font-size:12.5px">Day '+day.n+' of 8 · '+day.dow+'</div>'+
+      '<div style="font-family:var(--serif);font-size:27px;line-height:1.15;margin:5px 0 4px">'+esc(day.title)+'</div>'+
+      '<div class="note">'+esc(day.loc)+'</div>'+
+      '<div style="margin-top:10px"><span class="tag you">'+esc(day.dress)+'</span></div></div>';
+    var h='<div class="sechead">Everything today</div><div class="card">';
+    day.events.forEach(function(e){
+      h+='<div class="evt'+(e.k?' key':'')+'"><time>'+esc(e.t)+'</time><div><b>'+esc(e.b)+'</b>'+(e.s?'<small>'+esc(e.s)+'</small>':'')+'</div></div>';
+    });
+    h+='</div>';
+    (day.flags||[]).forEach(function(f){h+='<div class="card flag">'+esc(f)+'</div>'});
+    var nx=DAYS.filter(function(d){return d.n===day.n+1})[0];
+    if(nx)h+='<div class="sechead">Tomorrow</div><div class="card"><b>'+esc(nx.title)+'</b><div class="note" style="margin-top:4px">'+esc(nx.loc)+' · '+esc(nx.dress)+'</div></div>';
+    body.innerHTML=h;
+    document.getElementById('hdrSub').textContent='Day '+day.n+' · '+day.dow+', Sept '+(+day.date.slice(8));
+  } else if(now<start){
+    var days=Math.ceil((start-now)/86400000);
+    hero.innerHTML='<div class="card hero"><div style="font-family:var(--serif);font-size:44px;line-height:1">'+days+'</div>'+
+      '<div class="note" style="margin-top:2px">'+(days===1?'day':'days')+' until you fly to Iceland</div>'+
+      '<div class="note" style="margin-top:10px">Monday, Sept 14 · Huntsville 1:05 PM</div></div>';
+    body.innerHTML='<div class="sechead">Before you go</div>'+
+     '<div class="card"><ul>'+
+     '<li>Check both passports are valid through at least March 2027 and have two blank pages.</li>'+
+     '<li>Confirm the name on each passport matches the ticket exactly.</li>'+
+     '<li>Tell your credit card company you\'ll be in Iceland.</li>'+
+     '<li>Confirm which buggy session you\'re booked on — morning or afternoon.</li>'+
+     '<li>Download offline maps and check roaming with your carrier.</li>'+
+     '<li>Weigh both suitcases. 50lb each.</li>'+
+     '<li>Swimsuits into the carry-on, not the checked bag.</li>'+
+     '</ul></div>'+
+     '<div class="sechead">First day, in short</div>'+
+     '<div class="card"><div class="evt key"><time>10:00 AM</time><div><b>Be at Huntsville airport</b><small>Three hours before boarding.</small></div></div>'+
+     '<div class="evt"><time>1:05 PM</time><div><b>UA 4411 to Dulles</b><small>Seats 17C and 17D.</small></div></div>'+
+     '<div class="evt"><time>10:35 PM</time><div><b>UA 0398 to Keflavík</b><small>Seats 34D and 34E. Land 8:30 AM Tuesday.</small></div></div></div>';
+  } else {
+    hero.innerHTML='<div class="card hero"><div style="font-family:var(--serif);font-size:26px">Home</div>'+
+      '<div class="note" style="margin-top:5px">Eight days, two hotels, three tours, one black sand beach.</div></div>';
+    body.innerHTML='<div class="sechead">Still here if you need it</div><div class="card"><p class="note">Every day, flight, receipt-worthy cost and contact number is still in the other tabs.</p></div>';
+  }
+}
+buildToday();
+
+/* ---------------- weather ---------------- */
+(function(){
+  var spots=[
+    {n:'Geysir',lat:64.31,lon:-20.30,d1:'2026-09-15',d2:'2026-09-17'},
+    {n:'Reykjavik',lat:64.15,lon:-21.94,d1:'2026-09-18',d2:'2026-09-21'}
+  ];
+  var codes={0:'Clear',1:'Mostly clear',2:'Partly cloudy',3:'Overcast',45:'Fog',48:'Fog',51:'Drizzle',53:'Drizzle',55:'Drizzle',
+    61:'Rain',63:'Rain',65:'Heavy rain',66:'Freezing rain',67:'Freezing rain',71:'Snow',73:'Snow',75:'Snow',
+    80:'Showers',81:'Showers',82:'Heavy showers',85:'Snow showers',86:'Snow showers',95:'Storms',96:'Storms',99:'Storms'};
+  var wrap=document.getElementById('wxWrap'),st=document.getElementById('wxStatus'),done=0,any=false;
+  spots.forEach(function(s){
+    var u='https://api.open-meteo.com/v1/forecast?latitude='+s.lat+'&longitude='+s.lon+
+      '&daily=temperature_2m_max,temperature_2m_min,precipitation_probability_max,wind_speed_10m_max,weather_code'+
+      '&temperature_unit=fahrenheit&wind_speed_unit=mph&timezone=Atlantic%2FReykjavik&start_date='+s.d1+'&end_date='+s.d2;
+    fetch(u).then(function(r){return r.json()}).then(function(j){
+      if(!j.daily||!j.daily.time)throw 0;
+      any=true;
+      var h='<div class="note" style="margin:12px 0 7px;color:var(--rime)"><b>'+s.n+'</b></div><div class="wx">';
+      j.daily.time.forEach(function(t,i){
+        var d=new Date(t+'T12:00:00');
+        h+='<div class="wxd"><b>'+d.toLocaleDateString('en-US',{weekday:'short'})+' '+d.getDate()+'</b>'+
+           '<div class="t">'+Math.round(j.daily.temperature_2m_max[i])+'&deg;</div>'+
+           '<div class="lo">'+Math.round(j.daily.temperature_2m_min[i])+'&deg; low</div>'+
+           '<div class="r">'+(j.daily.precipitation_probability_max[i]||0)+'% rain</div>'+
+           '<div class="r" style="color:var(--steam)">'+Math.round(j.daily.wind_speed_10m_max[i])+' mph</div>'+
+           '<div class="lo" style="margin-top:3px;font-size:11px">'+(codes[j.daily.weather_code[i]]||'')+'</div></div>';
+      });
+      wrap.insertAdjacentHTML('beforeend',h+'</div>');
+    }).catch(function(){}).then(function(){
+      if(++done===spots.length){
+        st.textContent=any?'Live forecast, updated when you have signal.':'No signal — using the seasonal averages below.';
+      }
+    });
+  });
+  setTimeout(function(){if(!any)st.textContent='No signal — using the seasonal averages below.'},6000);
+})();
+
+/* ---------------- nav ---------------- */
+document.querySelectorAll('nav button').forEach(function(b){
+  b.addEventListener('click',function(){
+    document.querySelectorAll('nav button').forEach(function(x){x.classList.remove('on')});
+    document.querySelectorAll('.panel').forEach(function(x){x.classList.remove('on')});
+    b.classList.add('on');
+    document.getElementById('p-'+b.dataset.p).classList.add('on');
+    window.scrollTo(0,0);
+  });
+});
+/* ---------------- offline cache ---------------- */
+if('serviceWorker' in navigator){
+  window.addEventListener('load',function(){
+    navigator.serviceWorker.register('sw.js').catch(function(){});
+  });
+}
+</script>
+</body>
+</html>

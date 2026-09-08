@@ -1,0 +1,11 @@
+{
+  "name": "Iceland — Jacob & Krosley",
+  "short_name": "Iceland",
+  "description": "Trip guide for Sept 14–21, 2026",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "orientation": "portrait",
+  "background_color": "#12181D",
+  "theme_color": "#12181D"
+}
