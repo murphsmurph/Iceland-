@@ -243,6 +243,17 @@ nav button.on{color:var(--geyser)}
   </div>
   <div id="doList"></div>
 
+  <div class="sechead">September, specifically</div>
+  <div class="card">
+    <ul>
+      <li><b>Puffins are gone.</b> They leave the cliffs by late August. Don't plan around them.</li>
+      <li><b>Réttir is on.</b> Farmers ride into the highlands to round up the sheep for winter, early September to mid-October. If the coach passes a sorting pen full of sheep and people, that's it.</li>
+      <li><b>Northern lights season starts.</b> Nights are dark enough from early September. Both hotels have a wake-up list. Get on it the first night.</li>
+      <li><b>Whooper swans and geese</b> are gathering in the wetlands to migrate. Big white birds on lakes and fields are swans.</li>
+      <li><b>Sunset about 7:45 PM.</b> Sunrise about 6:45 AM. Real daylight for every tour.</li>
+    </ul>
+  </div>
+
   <div class="sechead">Included in the trip</div>
   <div id="incList"></div>
 </section>
@@ -331,6 +342,10 @@ nav button.on{color:var(--geyser)}
     <div class="evt"><time>10 min</time><div><b>Hrím — Laugavegur 25</b><small>Nordic homewares: kitchen tools, candles, textiles.</small></div></div>
     <div class="evt"><time>12 min</time><div><b>Rammagerðin — Skólavörðustígur 12</b><small>Icelandic design and gifts since 1940, over 400 local makers. Open to 8:00 PM.</small></div></div>
     <div class="evt"><time>13 min</time><div><b>Handknitting Association — Skólavörðustígur 19</b><small>The real lopapeysa, hand-knitted in Iceland by members. Open to 7:00 PM weekdays, 5:00 PM Sat.</small></div></div>
+    <div class="evt"><time>4 min</time><div><b>Iða Zimsen — Vesturgata 2a</b><small>Bookshop café by the harbour. Coffee, pastries, Icelandic and English books, free wi-fi.</small></div></div>
+    <div class="evt"><time>5 min</time><div><b>Eymundsson — Austurstræti 18</b><small>Iceland's oldest bookstore, since 1872, and its biggest. Deep English section, café upstairs. A second branch at Skólavörðustígur 11.</small></div></div>
+    <div class="evt"><time>9 min</time><div><b>Mál og menning — Laugavegur 18</b><small>Bookstore, café and bar in one, with second-hand Icelandic and English shelves. Open to 10:00 PM every day.</small></div></div>
+    <div class="evt"><time>10 min</time><div><b>Bókin — Klapparstígur 25</b><small>Chaotic antiquarian shop from 1964, books stacked to the ceiling. Mostly Icelandic, with English and German corners. 1:00–6:00 PM weekdays, to 5:00 PM Sat. Same street as The Irishman.</small></div></div>
     <div class="evt"><time>12 min</time><div><b>Omnom Chocolate — Grandi</b><small>Bean-to-bar factory shop out by the old harbour.</small></div></div>
     <div class="evt"><time>4 min</time><div><b>Kolaportið flea market — Tryggvagata</b><small>Weekends only, 11:00–17:00. You're on tours both days, so this one probably doesn't happen.</small></div></div>
   </div>
@@ -578,23 +593,72 @@ var TOURS=[
   desc:"Off-road buggies between the Geysir geothermal field and Gullfoss, up onto the Haukadalsheiði plateau along the old Kjölur road. Views of Langjökull glacier and Sandvatn lagoon.",
   inc:"Helmets, gloves, balaclavas, waterproof overalls and transport both ways.",
   wear:"Warm layers under the overalls. Sunglasses. Phone in a waterproof case.",
-  warn:"Not recommended if you have back problems. Session not yet confirmed — check at the Hospitality Desk."},
+  warn:"Not recommended if you have back problems. Session not yet confirmed — check at the Hospitality Desk.",
+  see:[
+   ["Haukadalsheiði","The highland plateau above Geysir. The old Kjölur route crossed the interior here between north and south Iceland."],
+   ["Langjökull","Iceland's second-largest glacier, on the horizon the whole way. Its meltwater is the Hvítá river that makes Gullfoss."],
+   ["Sandvatn","A glacial lake up on the plateau, black gravel and moss around it."]
+  ],
+  wild:"Sheep still loose on the heath before the September round-up. Ravens. Ptarmigan turning white for winter. Geese and whooper swans gathering to migrate south."},
  {name:"Thor's Valley — Þórsmörk",when:"Saturday, Sept 19",time:"7:45 AM–6:30 PM",
   desc:"A full day into a glacier-carved valley between volcanoes, by modified mountain bus. Light hikes at Seljalandsfoss, Gígjökull glacier and Stakkholtsgjá canyon, through birch forest and river crossings.",
   inc:"Transport, Icelandic BBQ lunch in the reserve, guided walks at each stop.",
   wear:"Hiking shoes, moisture-wicking base layer, fleece, waterproof shell, gloves, hat.",
-  warn:"Not ADA accessible. Uneven paths and forest hiking. Longest day of the trip."},
+  warn:"Not ADA accessible. Uneven paths and forest hiking. Longest day of the trip.",
+  see:[
+   ["Seljalandsfoss","A 60 m drop you can walk behind on a path. You will get wet. Bring the shell."],
+   ["Gljúfrabúi","One minute from Seljalandsfoss, a 40 m fall hidden inside a slot canyon. Ask the guide if there's time."],
+   ["River crossings","The mountain bus fords glacial rivers to get in. Krossá is the famous one that eats normal cars."],
+   ["Gígjökull","An outlet glacier of Eyjafjallajökull. The 2010 eruption sent a flood down it that wiped out the lagoon at its foot. You see the moraine and ponds it left."],
+   ["Stakkholtsgjá","A 2 km canyon with 100 m walls. It ends at a hidden 30 m waterfall in a mossy chamber."],
+   ["Þórsmörk","Birch woods and moss between three glaciers: Eyjafjallajökull, Tindfjallajökull and Mýrdalsjökull. Inside the Katla UNESCO Geopark."]
+  ],
+  wild:"Ptarmigan, golden plover and redwing in the birch. Ravens everywhere. A gyrfalcon or merlin overhead if you're lucky. Arctic fox lives here but you'd need dawn or dusk and real luck. Sheep in the woods before the round-up."},
  {name:"South Coast Highlights",when:"Sunday, Sept 20",time:"8:00 AM–6:00 PM",
   desc:"Motorcoach down the south coast to Seljalandsfoss, Skógafoss, and Reynisfjara — the black sand beach near Vík with basalt columns and heavy Atlantic surf. Photo stops throughout.",
   inc:"Transport, lunch and a guide.",
   wear:"Waterproof shell and warm layers. Waterfall spray will find you. Shoes that handle wet sand.",
-  warn:"Sneaker waves at Reynisfjara are genuinely dangerous. Stay far back and never turn your back on the water. You're back at 6:00 PM with the farewell reception at 7:00."}
+  warn:"Sneaker waves at Reynisfjara are genuinely dangerous. Stay far back and never turn your back on the water. You're back at 6:00 PM with the farewell reception at 7:00.",
+  see:[
+   ["Eyjafjallajökull","The volcano that grounded Europe's flights in 2010, on your left most of the drive out."],
+   ["Seljalandsfoss","Same fall as Saturday. If you walked behind it then, this stop is a photo and a coffee."],
+   ["Skógafoss","60 m tall, 25 m wide, straight off the old sea cliff. 527 steps to the top platform. Rainbows in the spray when the sun is out."],
+   ["Reynisfjara","Black basalt pebble beach. Hálsanefshellir cave has walls of hexagonal basalt columns. Reynisdrangar sea stacks rise 66 m offshore, trolls caught by sunrise in the legend. Dyrhólaey arch to the west."],
+   ["Vík","A village of about 300 under Reynisfjall, red-roofed church on the hill. Southernmost town in Iceland."]
+  ],
+  wild:"Fulmars and kittiwakes nest on Reynisfjall and the sea stacks. Puffins are gone by mid-September, so don't expect them. Icelandic horses and sheep in every field along Route 1. Whooper swans and greylag geese staging to leave. Seals turn up near Vík now and then, not reliably."}
 ];
 
 var INCLUDED=[
- {name:"Blue Lagoon",when:"Tuesday, Sept 15 — morning on arrival",note:"Breakfast and the lagoon at leisure, straight from the airport. Robe and towel provided. Swimsuit must be in your carry-on."},
- {name:"Gullfoss & Glacier Adventure",when:"Wednesday, Sept 16 — 12:30–5:45 PM",note:"Group tour after the morning meetings. Waterproofs — Gullfoss throws spray a long way."},
- {name:"Journey from Geysir to Reykjavik",when:"Friday, Sept 18 — 9:00 AM–2:30 PM",note:"Þingvellir National Park, Kerið Crater, and lunch at Ingólfsskáli Viking Restaurant on the way into the city."}
+ {name:"Blue Lagoon",when:"Tuesday, Sept 15 — morning on arrival",note:"Breakfast and the lagoon at leisure, straight from the airport. Robe and towel provided. Swimsuit must be in your carry-on.",
+  see:[
+   ["The water","Runoff from the Svartsengi geothermal plant next door: seawater and groundwater at 37–40°C, milky from dissolved silica. Fully renews every 40 hours."],
+   ["The lava","The lagoon sits in an 800-year-old lava field from a 1226 eruption, under Mount Þorbjörn. Grey moss on black rock all around."],
+   ["Silica mask","Free at the stands in the water. Put it on, rinse after 10 minutes."],
+   ["Reykjanes eruptions","The peninsula has erupted on and off since 2021. The lagoon has run normally through them. If anything changes, the travel directors will know first."]
+  ],
+  wild:"None to speak of. Condition your hair before you get in and keep it out of the water. The silica dries it out for days."},
+ {name:"Gullfoss & Glacier Adventure",when:"Wednesday, Sept 16 — 12:30–5:45 PM",note:"Group tour after the morning meetings. Waterproofs — Gullfoss throws spray a long way.",
+  see:[
+   ["Gullfoss","The Hvítá river, straight off Langjökull, drops 32 m in two stages into a canyon that turns a right angle. The upper path gets soaked."],
+   ["Sigríður's stone","A memorial at the top to Sigríður Tómasdóttir, the farmer's daughter who fought a hydro dam here in the 1920s and won."],
+   ["The glacier","Langjökull, Iceland's second-largest. Exactly what the glacier part involves is on the on-site agenda. Ask at the desk."]
+  ],
+  wild:"Ravens and not much else this high. Sheep on the drive."},
+ {name:"Journey from Geysir to Reykjavik",when:"Friday, Sept 18 — 9:00 AM–2:30 PM",note:"Þingvellir National Park, Kerið Crater, and lunch at Ingólfsskáli Viking Restaurant on the way into the city.",
+  see:[
+   ["Þingvellir","A rift valley where the North American and Eurasian plates pull apart about 2 cm a year. Walk the Almannagjá gorge, see Öxarárfoss, and the Silfra fissure where divers go. Iceland's parliament met here from 930."],
+   ["Kerið","A red scoria crater about 3,000 years old, 55 m deep, with an aquamarine lake in the bottom. Rim walk is 15–20 minutes."],
+   ["Ingólfsskáli","Turf-roofed Viking longhouse under Ingólfsfjall mountain. The family hunts and gathers a lot of the menu."]
+  ],
+  wild:"Þingvallavatn lake has arctic char and its own trout. Ducks and whooper swans on the water. Horses in the fields toward Selfoss."},
+ {name:"Haukadalur, out the hotel door",when:"Sept 15–17 — any time, free",note:"The geothermal field across the street from Hotel Geysir. Always open.",
+  see:[
+   ["Strokkur","Blows 15–20 m every 5–10 minutes. Watch the blue dome swell right before it goes."],
+   ["Geysir","The original, the one every geyser is named after. Mostly asleep now, a big steaming pool."],
+   ["Blesi","Two pools side by side, one bright blue from silica. Do not touch any of the water, it's near boiling."]
+  ],
+  wild:"Sheep on the hills, ravens, and the first northern lights of the season if the sky is clear. Get on the wake-up list."}
 ];
 
 var PACK=[
@@ -662,6 +726,16 @@ var DRESS=[
 /* ---------------- render ---------------- */
 function el(h){var d=document.createElement('div');d.innerHTML=h.trim();return d.firstChild}
 function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;')}
+function seeWild(t){
+  var h='';
+  if(t.see&&t.see.length){
+    h+='<div class="note" style="margin-top:12px;color:var(--rime)"><b>What you\'ll see</b></div><ul>';
+    t.see.forEach(function(s){h+='<li><b>'+esc(s[0])+'</b> — '+esc(s[1])+'</li>'});
+    h+='</ul>';
+  }
+  if(t.wild)h+='<div class="kv" style="margin-top:10px"><span>Wildlife</span><span style="text-align:left">'+esc(t.wild)+'</span></div>';
+  return h;
+}
 
 /* days */
 var todayKey=null;
@@ -707,12 +781,13 @@ document.getElementById('doList').innerHTML=TOURS.map(function(t){
   '<p class="note" style="margin-top:8px">'+esc(t.desc)+'</p>'+
   '<div class="kv"><span>Included</span><span>'+esc(t.inc)+'</span></div>'+
   '<div class="kv"><span>Wear</span><span>'+esc(t.wear)+'</span></div>'+
+  seeWild(t)+
   '<p class="note" style="margin-top:10px;color:var(--sulfur)">'+esc(t.warn)+'</p></div>';
 }).join('');
 
 document.getElementById('incList').innerHTML=INCLUDED.map(function(t){
   return '<div class="card"><b>'+esc(t.name)+'</b><div style="margin:7px 0 2px"><span class="tag free">Paid for</span><span class="tag">'+esc(t.when)+'</span></div>'+
-  '<p class="note" style="margin-top:7px">'+esc(t.note)+'</p></div>';
+  '<p class="note" style="margin-top:7px">'+esc(t.note)+'</p>'+seeWild(t)+'</div>';
 }).join('');
 
 /* dress */
