@@ -239,7 +239,7 @@ nav button.on{color:var(--geyser)}
 <section class="panel" id="p-do">
   <div class="sechead">Your three optional tours</div>
   <div class="card">
-    <p class="note">You're in <b style="color:var(--rime)">Group Two</b> on every list, which is why your dates land where they do. Total for the three, both of you: <b style="color:var(--sulfur)">202,600 ISK ≈ $1,647</b>. These are personal expenses, paid at booking.</p>
+    <p class="note">You're in <b style="color:var(--rime)">Group Two</b> on every list, which is why your dates land where they do. All three are <b style="color:var(--moss)">already paid for</b>.</p>
   </div>
   <div id="doList"></div>
 
@@ -351,15 +351,6 @@ nav button.on{color:var(--geyser)}
     <p class="note" style="margin-top:11px">Using the rate in your trip booklet: $1 = 123 ISK. Check xe.com for the live rate when you land.</p>
   </div>
 
-  <div class="sechead">What the three tours cost</div>
-  <div class="card">
-    <div class="kv"><span>Buggy Adventure</span><span>35,200 ISK · $286</span></div>
-    <div class="kv"><span>Þórsmörk day tour</span><span>43,500 ISK · $354</span></div>
-    <div class="kv"><span>South Coast Highlights</span><span>22,600 ISK · $184</span></div>
-    <div class="kv"><span><b>Each of you</b></span><span><b>101,300 ISK · $824</b></span></div>
-    <div class="kv"><span><b>Both of you</b></span><span><b>202,600 ISK · $1,647</b></span></div>
-  </div>
-
   <div class="sechead">Covered vs. on you</div>
   <div class="card">
     <b style="color:var(--moss)">Edward Jones pays</b>
@@ -380,7 +371,6 @@ nav button.on{color:var(--geyser)}
   <div class="card">
     <b style="color:var(--sulfur)">You pay</b>
     <ul>
-      <li>Your three optional tours</li>
       <li>Lunches on leisure days</li>
       <li>Anything past the cash supplement at dinner</li>
       <li>Room service, minibar, spa treatments</li>
@@ -489,7 +479,7 @@ var DAYS=[
  events:[
   {t:"7:00–8:30",b:"Breakfast",s:"Geysir Restaurant."},
   {t:"9:15–12:00",k:1,b:"Buggy Adventure — morning session",s:"One of two options. Confirm which one you're booked on at the Hospitality Desk."},
-  {t:"1:45–5:00",k:1,b:"Buggy Adventure — afternoon session",s:"The other option. Same tour, same price."},
+  {t:"1:45–5:00",k:1,b:"Buggy Adventure — afternoon session",s:"The other option. Same tour."},
   {t:"Rest of day",b:"Leisure",s:"Hiking trails from the hotel. Hot spring across the street."},
   {t:"Evening",b:"Dinner at Hotel Geysir",s:"Check the agenda — one Geysir dinner is included on the trip."}
  ],
@@ -551,17 +541,17 @@ var FLIGHTS_HOME=[
 ];
 
 var TOURS=[
- {name:"Buggy Adventure Tour",when:"Thursday, Sept 17",time:"9:15 AM–12:00 PM or 1:45–5:00 PM",price:"35,200 ISK · $286 each",
+ {name:"Buggy Adventure Tour",when:"Thursday, Sept 17",time:"9:15 AM–12:00 PM or 1:45–5:00 PM",
   desc:"Off-road buggies between the Geysir geothermal field and Gullfoss, up onto the Haukadalsheiði plateau along the old Kjölur road. Views of Langjökull glacier and Sandvatn lagoon.",
   inc:"Helmets, gloves, balaclavas, waterproof overalls and transport both ways.",
   wear:"Warm layers under the overalls. Sunglasses. Phone in a waterproof case.",
   warn:"Not recommended if you have back problems. Session not yet confirmed — check at the Hospitality Desk."},
- {name:"Thor's Valley — Þórsmörk",when:"Saturday, Sept 19",time:"7:45 AM–6:30 PM",price:"43,500 ISK · $354 each",
+ {name:"Thor's Valley — Þórsmörk",when:"Saturday, Sept 19",time:"7:45 AM–6:30 PM",
   desc:"A full day into a glacier-carved valley between volcanoes, by modified mountain bus. Light hikes at Seljalandsfoss, Gígjökull glacier and Stakkholtsgjá canyon, through birch forest and river crossings.",
   inc:"Transport, Icelandic BBQ lunch in the reserve, guided walks at each stop.",
   wear:"Hiking shoes, moisture-wicking base layer, fleece, waterproof shell, gloves, hat.",
   warn:"Not ADA accessible. Uneven paths and forest hiking. Longest day of the trip."},
- {name:"South Coast Highlights",when:"Sunday, Sept 20",time:"8:00 AM–6:00 PM",price:"22,600 ISK · $184 each",
+ {name:"South Coast Highlights",when:"Sunday, Sept 20",time:"8:00 AM–6:00 PM",
   desc:"Motorcoach down the south coast to Seljalandsfoss, Skógafoss, and Reynisfjara — the black sand beach near Vík with basalt columns and heavy Atlantic surf. Photo stops throughout.",
   inc:"Transport, lunch and a guide.",
   wear:"Waterproof shell and warm layers. Waterfall spray will find you. Shoes that handle wet sand.",
@@ -680,7 +670,7 @@ document.getElementById('flightsHome').innerHTML=FLIGHTS_HOME.map(flightCard).jo
 /* tours */
 document.getElementById('doList').innerHTML=TOURS.map(function(t){
   return '<div class="card"><b style="font-size:16px">'+esc(t.name)+'</b>'+
-  '<div style="margin:8px 0 4px"><span class="tag you">'+esc(t.when)+'</span><span class="tag">'+esc(t.time)+'</span><span class="tag pay">'+esc(t.price)+'</span></div>'+
+  '<div style="margin:8px 0 4px"><span class="tag you">'+esc(t.when)+'</span><span class="tag">'+esc(t.time)+'</span><span class="tag free">Paid for</span></div>'+
   '<p class="note" style="margin-top:8px">'+esc(t.desc)+'</p>'+
   '<div class="kv"><span>Included</span><span>'+esc(t.inc)+'</span></div>'+
   '<div class="kv"><span>Wear</span><span>'+esc(t.wear)+'</span></div>'+
