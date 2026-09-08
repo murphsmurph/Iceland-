@@ -143,7 +143,7 @@ nav{
 }
 nav button{
   flex:1;background:none;border:0;color:var(--steam);font-family:var(--sans);
-  font-size:10.5px;padding:6px 2px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
+  min-width:0;font-size:10px;padding:6px 1px 4px;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:3px;
 }
 nav button svg{width:21px;height:21px;stroke:currentColor;fill:none;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
 nav button.on{color:var(--geyser)}
@@ -245,6 +245,78 @@ nav button.on{color:var(--geyser)}
 
   <div class="sechead">Included in the trip</div>
   <div id="incList"></div>
+</section>
+
+<!-- ================= FREE ================= -->
+<section class="panel" id="p-free">
+  <div class="sechead">When you're actually free</div>
+  <div class="card">
+    <div class="kv"><span>Tue 15, 3:30–6:00 PM</span><span>Geysir, jet-lagged</span></div>
+    <div class="kv"><span>Thu 17, half day</span><span>Geysir, your one window</span></div>
+    <div class="kv"><span>Fri 18, 3:00 PM–dinner</span><span>Reykjavik, the best one</span></div>
+    <div class="kv"><span>Fri 18, evening</span><span>Dine-around night one</span></div>
+    <div class="kv"><span>Sat 19, 6:30 PM on</span><span>Dine-around night two</span></div>
+    <div class="kv"><span>Sun 20</span><span>None, tour runs into farewell</span></div>
+    <div class="kv"><span>Mon 21, early AM</span><span>Depends on transfer time</span></div>
+  </div>
+  <div class="card flag">
+    <b>No rental car</b>
+    <p class="note" style="margin-top:6px">At Geysir that means walking distance only, unless the Edward Jones Hospitality Desk arranges a ride. Reykjavik is all on foot from the hotel.</p>
+  </div>
+
+  <div class="sechead">Reykjavik — the Guinness</div>
+  <div class="card hero">
+    <b style="font-size:16px">The Irishman Pub</b>
+    <div class="note" style="margin:4px 0 8px">Klapparstígur 27, 101 Reykjavik. About a 10 minute walk from The Reykjavik EDITION, just off Laugavegur.</div>
+    <div style="margin-bottom:6px"><span class="tag free">Happy hour 12:00–19:00 daily</span><span class="tag">Guinness &amp; Kilkenny on draft</span></div>
+    <div class="kv"><span>Beer</span><span>From about 850 ISK (~$7)</span></div>
+    <div class="kv"><span>Live music</span><span>Thursday–Saturday evenings</span></div>
+    <div class="kv"><span>Also</span><span>Darts, a wheel of fortune, a private karaoke room you can book</span></div>
+    <p class="note" style="margin-top:10px;color:var(--rime)"><b>Go Friday Sept 18 around 4:30 PM.</b> Happy hour is still on, you arrive in the city at 2:30 and check in at 3:00, and dinner is right after. Saturday has a better crowd but you don't get back from Þórsmörk until 6:30 PM.</p>
+    <p class="note" style="margin-top:8px">Reviews split hard on the atmosphere. Go for the pint and the darts, not for a taste of Dublin.</p>
+    <a class="btn call" href="tel:+3545812020">Call +354 581-2020</a>
+  </div>
+
+  <div class="sechead">Reykjavik on foot</div>
+  <div class="card">
+    <p class="note">Walk times from The Reykjavik EDITION on the Old Harbour. The centre is flat and compact.</p>
+    <div class="evt"><time>2 min</time><div><b>Harpa Concert Hall</b><small>Next door, free to walk into. Glass honeycomb facade, bay view from the lobby.</small></div></div>
+    <div class="evt"><time>5 min</time><div><b>Bæjarins Beztu</b><small>The hot dog stand. "Eina með öllu" is one with everything.</small></div></div>
+    <div class="evt"><time>7 min</time><div><b>Laugavegur</b><small>Main shopping street, 25 min end to end.</small></div></div>
+    <div class="evt"><time>8 min</time><div><b>Grandi / old harbour</b><small>Fish restaurants, food hall, microbreweries, Hafnarhús art museum in a converted warehouse.</small></div></div>
+    <div class="evt"><time>10 min</time><div><b>Sun Voyager</b><small>Steel Viking-ship sculpture on the waterfront. Free and open all hours, best near sunset (~7:45 PM that week).</small></div></div>
+    <div class="evt"><time>10 min</time><div><b>Tjörnin pond</b><small>City-centre lake by City Hall.</small></div></div>
+    <div class="evt"><time>12 min</time><div><b>Brauð &amp; Co</b><small>Bakery, cinnamon rolls, on the way to the church.</small></div></div>
+    <div class="evt"><time>15 min</time><div><b>Hallgrímskirkja</b><small>Uphill via Skólavörðustígur, the rainbow street. Free to enter, tower lift costs extra, best view in town.</small></div></div>
+    <div class="evt"><time>15 min</time><div><b>Reykjavik Roasters</b><small>Small-batch coffee behind the church.</small></div></div>
+  </div>
+
+  <div class="sechead">Geysir on foot</div>
+  <div class="card">
+    <div class="evt key"><time>Across the street</time><div><b>The geothermal field</b><small>Free and always open. Strokkur erupts every 8–10 minutes. Go at dusk after the day-tour buses leave.</small></div></div>
+    <div class="evt"><time>30–45 min</time><div><b>Laugarfjall hill trail</b><small>Behind the field, view over Haukadalur.</small></div></div>
+    <div class="evt"><time>Next door</time><div><b>Geysir Center shops</b><small>Lopapeysa wool sweaters, lava jewellery, outdoor gear. Also the only ATM in the area.</small></div></div>
+    <div class="evt"><time>In hotel</time><div><b>Rooftop bar</b></div></div>
+    <div class="evt"><time>Free</time><div><b>Northern lights wake-up call</b><small>Ask the front desk to be listed.</small></div></div>
+  </div>
+
+  <div class="sechead">Geysir — needs a ride</div>
+  <div class="card">
+    <p class="note">Ask the Hospitality Desk to arrange transport.</p>
+    <div class="evt"><time>~15 min</time><div><b>Efstidalur farm</b><small>Ice cream made on site, cows visible from the parlour window.</small></div></div>
+    <div class="evt"><time>~15 min</time><div><b>Faxi waterfall</b><small>Wide and low, far quieter than Gullfoss.</small></div></div>
+    <div class="evt"><time>~20 min</time><div><b>Friðheimar</b><small>Tomato soup inside a geothermal greenhouse. Check the on-site agenda first, the Friðheimar theme dinner may already be included in the trip.</small></div></div>
+    <div class="evt"><time>~30 min</time><div><b>Secret Lagoon, Flúðir</b><small>Iceland's oldest geothermal pool, built 1891. Small geyser every few minutes, quieter than Blue Lagoon. Book ahead.</small></div></div>
+  </div>
+
+  <div class="sechead">Shopping</div>
+  <div class="card">
+    <ul>
+      <li>At Geysir: artisanal goods, outdoor wear, items made with local lava, Old Norse and Celtic motifs, highland materials</li>
+      <li>In Reykjavik: lopapeysa sweaters, scarves and blankets, designer jewellery, reindeer and sheep skins, weather-resistant glassware, handmade pottery, shoes and eyewear</li>
+      <li>Ask for the tax-free form on anything over 6,000 ISK and claim the refund at Keflavík before flying</li>
+    </ul>
+  </div>
 </section>
 
 <!-- ================= PACK ================= -->
@@ -362,6 +434,7 @@ nav button.on{color:var(--geyser)}
   <button data-p="days"><svg viewBox="0 0 24 24"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg>Days</button>
   <button data-p="travel"><svg viewBox="0 0 24 24"><path d="M3 13l8-2 4-8 2 1-2 8 5-1 1 2-5 2-3 7-2-1 1-6-8 2z"/></svg>Travel</button>
   <button data-p="do"><svg viewBox="0 0 24 24"><path d="M3 19l6-9 4 5 3-4 5 8z"/><circle cx="8" cy="6" r="2"/></svg>Do</button>
+  <button data-p="free"><svg viewBox="0 0 24 24"><path d="M5 3h14l-7 9-7-9z"/><path d="M12 12v8M8 20h8M6 7h12"/></svg>Free</button>
   <button data-p="pack"><svg viewBox="0 0 24 24"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M9 7V5a2 2 0 012-2h2a2 2 0 012 2v2"/></svg>Pack</button>
   <button data-p="money"><svg viewBox="0 0 24 24"><rect x="2" y="6" width="20" height="12" rx="2"/><circle cx="12" cy="12" r="2.5"/></svg>Money</button>
 </nav>
